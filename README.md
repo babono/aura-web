@@ -46,7 +46,7 @@ viewport size and freezes under `prefers-reduced-motion`.
       ([guidelines](https://developer.apple.com/app-store/marketing/guidelines/)).
 - [x] Contact email set to `babono@me.com` — referenced in the footer, privacy
       policy, terms and support pages.
-- [ ] Update `SITE_URL` in `src/app/layout.tsx` to the real domain.
+- [x] `SITE_URL` in `src/app/layout.tsx` set to https://auraweatheractivity.vercel.app.
 - [ ] Have the privacy policy and terms reviewed before you rely on them.
 - [ ] Add an OG image at `public/og.png` and reference it in `metadata.openGraph`.
 

@@ -16,7 +16,7 @@ const instrumentSerif = Instrument_Serif({
   display: "swap",
 });
 
-const SITE_URL = "https://aura-weather.app";
+const SITE_URL = "https://auraweatheractivity.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
