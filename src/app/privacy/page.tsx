@@ -67,11 +67,11 @@ export default function PrivacyPage() {
               .
             </>,
             <>
-              <strong>Tripadvisor Content API</strong> — receives your coordinates
+              <strong>Apple Maps (MapKit)</strong> — receives your coordinates
               and a search term when you open a recommendation, so it can return
-              nearby places, photos and reviews. See the{" "}
-              <a href="https://www.tripadvisor.com/privacy" target="_blank" rel="noopener noreferrer">
-                Tripadvisor privacy policy
+              nearby places and directions. See the{" "}
+              <a href="https://www.apple.com/legal/privacy/data/en/apple-maps/" target="_blank" rel="noopener noreferrer">
+                Apple Maps privacy notice
               </a>
               .
             </>,

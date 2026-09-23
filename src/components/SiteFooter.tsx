@@ -42,7 +42,7 @@ export default function SiteFooter() {
         <div className="mt-12 flex flex-col gap-3 border-t border-black/5 pt-6 text-xs text-ink-soft sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} Aura. All rights reserved.</p>
           <p>
-            Weather data from Apple Weather and Open-Meteo. Places from Tripadvisor.
+            Weather data from Apple Weather and Open-Meteo. Places from Apple Maps.
           </p>
         </div>
       </div>

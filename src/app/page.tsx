@@ -19,7 +19,7 @@ const FEATURES = [
   },
   {
     title: "Places worth the trip",
-    body: "Tap any suggestion to find real venues nearby, with photos, reviews and directions powered by Tripadvisor.",
+    body: "Tap any suggestion to find real venues nearby, with details and directions from Apple Maps.",
   },
 ];
 

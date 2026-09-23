@@ -49,13 +49,13 @@ export default function TermsPage() {
           Activity and food suggestions are generated automatically and are
           offered as ideas, not advice. Aura does not verify that a suggested
           activity is safe, suitable or available to you, and place information
-          comes from Tripadvisor rather than from us.
+          comes from Apple Maps rather than from us.
         </p>
       </Section>
 
       <Section title="Third-party content">
         <p>
-          The app displays data from Apple Weather, Open-Meteo and Tripadvisor.
+          The app displays data from Apple Weather, Open-Meteo and Apple Maps.
           That content belongs to its respective owners and is subject to their
           terms. Aura is not responsible for its accuracy or availability.
         </p>
