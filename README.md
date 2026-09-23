@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# aura-web
 
-## Getting Started
+Marketing and legal site for the [Aura](https://github.com/ayungavis/aura-app) iOS app.
 
-First, run the development server:
+Next.js 16 (App Router) + Tailwind v4. Every route is statically prerendered —
+there is no server-side logic and no database.
+
+## Run it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev     # http://localhost:3000
+npm run build   # static production build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Design system
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The palette and type are lifted directly from the app so the two read as one
+product:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Token | Value | Source in the app |
+| --- | --- | --- |
+| `aura-deep` | `#6F48C8` | `AnimatedMeshBackground.swift` |
+| `aura-mid` | `#9978E6` | `AnimatedMeshBackground.swift` |
+| `aura-cream` | `#FFE6CD` | `AnimatedMeshBackground.swift` |
+| `aura-primary` | `#865DE0` | `Color.auraPrimary` |
 
-## Learn More
+Type is Instrument Serif (display) and Instrument Sans (UI) — the same two
+families the app bundles, served locally via `next/font`.
 
-To learn more about Next.js, take a look at the following resources:
+`src/components/MeshGradient.tsx` is a port of the app's animated
+`MeshGradient`: same control grid, same colours, same motion. It renders to a
+56x56 canvas and lets the browser upscale, so it costs the same regardless of
+viewport size and freezes under `prefers-reduced-motion`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+> **Note on font variables:** they are declared on `<html>`, not `<body>`.
+> Tailwind resolves `--font-serif: var(--font-instrument-serif), …` on `:root`,
+> and an inner `var()` is substituted at the element that declares it — put the
+> font classes on `<body>` and that lookup silently fails.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Before launch
 
-## Deploy on Vercel
+- [ ] Set `APP_STORE_URL` in `src/components/AppStoreBadge.tsx`; the badge turns
+      itself from "Coming soon" into a real link.
+- [ ] Swap the placeholder badge markup for Apple's official artwork
+      ([guidelines](https://developer.apple.com/app-store/marketing/guidelines/)).
+- [x] Contact email set to `babono@me.com` — referenced in the footer, privacy
+      policy, terms and support pages.
+- [ ] Update `SITE_URL` in `src/app/layout.tsx` to the real domain.
+- [ ] Have the privacy policy and terms reviewed before you rely on them.
+- [ ] Add an OG image at `public/og.png` and reference it in `metadata.openGraph`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deploy
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Static output, so anything works — Vercel, Netlify, Cloudflare Pages or GitHub
+Pages. App Store Connect wants two of these URLs: `/privacy` (required) and
+`/support` (required).

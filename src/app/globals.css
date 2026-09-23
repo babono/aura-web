@@ -1,26 +1,83 @@
 @import "tailwindcss";
 
+/*
+ * Palette lifted directly from the iOS app so the site and the product read as
+ * one thing:
+ *   AnimatedMeshBackground.swift  -> the three mesh colours
+ *   Color+extension.swift         -> Color.auraPrimary (#865DE0)
+ */
+@theme {
+  --color-aura-deep: #6f48c8; /* MeshGradient 0.433, 0.283, 0.785 */
+  --color-aura-mid: #9978e6; /* MeshGradient 0.600, 0.469, 0.903 */
+  --color-aura-cream: #ffe6cd; /* MeshGradient 1.000, 0.902, 0.804 */
+  --color-aura-primary: #865de0;
+
+  --color-ink: #16121f;
+  --color-ink-soft: #5a5266;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f7f5fb;
+
+  --font-serif: var(--font-instrument-serif), Georgia, serif;
+  --font-sans: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #16121f;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+}
+
+/* Section reveal — opt out entirely under reduced motion. */
+@keyframes aura-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.aura-rise {
+  animation: aura-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes aura-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.aura-float {
+  animation: aura-float 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .aura-rise,
+  .aura-float {
+    animation: none !important;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
 }
