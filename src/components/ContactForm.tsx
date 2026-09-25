@@ -1,54 +1,58 @@
 "use client";
 
-import { useState } from "react";
-import { SUPPORT_EMAIL } from "@/lib/site";
+import { useActionState, useState } from "react";
+import { sendContactMessage, type ContactState } from "@/app/support/actions";
+import { CONTACT_TOPICS } from "@/lib/site";
 
-const TOPICS = ["Something is broken", "A question", "Feedback or an idea", "Something else"];
+const INITIAL_STATE: ContactState = { status: "idle" };
 
-/**
- * There is no backend, so the form composes an email in the visitor's own mail
- * app. That keeps the reply thread in their inbox and means nothing is stored.
- */
 export default function ContactForm() {
-  const [topic, setTopic] = useState(TOPICS[0]);
-  const [device, setDevice] = useState("");
-  const [ios, setIos] = useState("");
-  const [message, setMessage] = useState("");
-  const [sent, setSent] = useState(false);
+  const [state, formAction, pending] = useActionState(sendContactMessage, INITIAL_STATE);
+  const [topic, setTopic] = useState(CONTACT_TOPICS[0]);
 
-  const isBug = topic === TOPICS[0];
+  const isBug = topic === CONTACT_TOPICS[0];
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    const details = [
-      device && `iPhone model: ${device}`,
-      ios && `iOS version: ${ios}`,
-    ].filter(Boolean);
-    const body = details.length ? `${message}\n\n—\n${details.join("\n")}` : message;
-
-    const params = new URLSearchParams({ subject: `Aura: ${topic}`, body });
-    // URLSearchParams encodes spaces as "+", which mail clients show literally.
-    window.location.href = `mailto:${SUPPORT_EMAIL}?${params.toString().replace(/\+/g, "%20")}`;
-    setSent(true);
+  if (state.status === "sent") {
+    return (
+      <div role="status" className="py-4 text-center">
+        <p className="font-serif text-2xl text-ink">Thanks — message received.</p>
+        <p className="mt-2 text-ink-soft">We&rsquo;ll reply to the email address you gave us.</p>
+      </div>
+    );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form action={formAction} className="space-y-5">
       <Field label="What is it about?">
-        <select value={topic} onChange={(event) => setTopic(event.target.value)} className={INPUT}>
-          {TOPICS.map((option) => (
+        <select
+          name="topic"
+          value={topic}
+          onChange={(event) => setTopic(event.target.value)}
+          className={INPUT}
+        >
+          {CONTACT_TOPICS.map((option) => (
             <option key={option}>{option}</option>
           ))}
         </select>
       </Field>
 
+      <Field label="Your email">
+        <input
+          name="email"
+          type="email"
+          required
+          autoComplete="email"
+          placeholder="you@example.com"
+          className={INPUT}
+        />
+      </Field>
+
       <Field label="Message">
         <textarea
+          name="message"
           required
           rows={6}
-          value={message}
-          onChange={(event) => setMessage(event.target.value)}
+          maxLength={8000}
           placeholder={isBug ? "What happened, and what did you expect to happen?" : "How can we help?"}
           className={`${INPUT} resize-y`}
         />
@@ -56,35 +60,35 @@ export default function ContactForm() {
 
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="iPhone model" optional={!isBug}>
-          <input
-            value={device}
-            onChange={(event) => setDevice(event.target.value)}
-            placeholder="iPhone 16 Pro"
-            className={INPUT}
-          />
+          <input name="device" maxLength={100} placeholder="iPhone 16 Pro" className={INPUT} />
         </Field>
         <Field label="iOS version" optional={!isBug}>
-          <input
-            value={ios}
-            onChange={(event) => setIos(event.target.value)}
-            placeholder="26.1"
-            className={INPUT}
-          />
+          <input name="ios" maxLength={50} placeholder="26.1" className={INPUT} />
         </Field>
       </div>
+
+      {/* Honeypot: invisible to people, tempting to bots. */}
+      <input
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute -left-[9999px] h-px w-px opacity-0"
+      />
 
       <div className="flex flex-wrap items-center gap-x-5 gap-y-3 pt-1">
         <button
           type="submit"
-          className="rounded-full bg-aura-primary px-6 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-[1.03]"
+          disabled={pending}
+          className="rounded-full bg-aura-primary px-6 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-[1.03] disabled:cursor-wait disabled:opacity-60 disabled:hover:scale-100"
         >
-          Write the email
+          {pending ? "Sending…" : "Send message"}
         </button>
-        <p className="text-sm text-ink-soft" aria-live="polite">
-          {sent
-            ? `Nothing opened? Email ${SUPPORT_EMAIL} directly.`
-            : "Opens in your mail app, ready to send."}
-        </p>
+        {state.status === "error" ? (
+          <p role="alert" className="text-sm text-red-600">
+            {state.message}
+          </p>
+        ) : null}
       </div>
     </form>
   );

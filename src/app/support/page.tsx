@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
 import LegalLayout, { Section } from "@/components/LegalLayout";
-import { SUPPORT_EMAIL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Support",
@@ -45,11 +44,8 @@ export default function SupportPage() {
       <section id="contact" className="scroll-mt-28">
         <h2 className="font-serif text-2xl text-ink">Contact us</h2>
         <p className="mt-3 leading-relaxed text-ink-soft">
-          Fill this in and it opens as an email in your mail app, or write to{" "}
-          <a href={`mailto:${SUPPORT_EMAIL}`} className="text-aura-primary underline underline-offset-2">
-            {SUPPORT_EMAIL}
-          </a>{" "}
-          directly.
+          Send us a message and we&rsquo;ll reply by email. For a bug, telling us
+          your iPhone model and iOS version makes it far easier to track down.
         </p>
         <div className="mt-6 rounded-2xl border border-black/5 bg-surface-muted p-5 sm:p-6">
           <ContactForm />

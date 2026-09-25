@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Logo from "./Logo";
-import { SUPPORT_EMAIL } from "@/lib/site";
 
 export default function SiteFooter() {
   return (
@@ -35,7 +34,6 @@ export default function SiteFooter() {
               links={[
                 { href: "/support", label: "Support" },
                 { href: "/support#contact", label: "Contact" },
-                { href: `mailto:${SUPPORT_EMAIL}`, label: SUPPORT_EMAIL },
               ]}
             />
           </div>
