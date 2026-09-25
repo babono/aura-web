@@ -19,8 +19,8 @@ export default function SiteFooter() {
                 Built at{" "}
                 <span className="whitespace-nowrap font-medium text-ink">
                   <AppleLogo /> Apple Developer Academy Bali
-                </span>{" "}
-                during Challenge 2 Remix Weather App
+                </span>
+                <span className="block">during Challenge 2 Remix Weather App</span>
               </p>
               <p className="font-medium text-ink">
                 {MAKERS.map((name, index) => (
