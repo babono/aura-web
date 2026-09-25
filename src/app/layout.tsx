@@ -41,9 +41,6 @@ export const metadata: Metadata = {
     description:
       "Live conditions, the hours ahead, and on-device suggestions for what to do and what to eat.",
   },
-  icons: {
-    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
-  },
 };
 
 export const viewport: Viewport = {
