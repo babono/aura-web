@@ -3,6 +3,9 @@ import PhoneMockup, { WidgetMockup } from "@/components/PhoneMockup";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import AppStoreBadge from "@/components/AppStoreBadge";
+import homeScreenshot from "@/assets/screenshots/home.png";
+import activityScreenshot from "@/assets/screenshots/activity.png";
+import placeScreenshot from "@/assets/screenshots/place.png";
 
 const FEATURES = [
   {
@@ -23,6 +26,27 @@ const FEATURES = [
   },
 ];
 
+const SCREENS = [
+  {
+    src: homeScreenshot,
+    title: "Read the sky",
+    body: "Conditions, a line on how the day feels, and the hours ahead.",
+    alt: "Aura home screen: 30° and clear in Kabupaten Badung, an hourly forecast, and recommended activities and foods",
+  },
+  {
+    src: activityScreenshot,
+    title: "Pick something to do",
+    body: "Each suggestion comes with a fun fact and real places nearby.",
+    alt: "Aura activity screen for Market, with a fun fact and a list of recommended places nearby",
+  },
+  {
+    src: placeScreenshot,
+    title: "Go there",
+    body: "Hours, address and directions, straight from Apple Maps.",
+    alt: "Aura place details for Pras market, showing a map, opening hours, address and buttons to get directions",
+  },
+];
+
 export default function Home() {
   return (
     <>
@@ -30,6 +54,7 @@ export default function Home() {
       <main>
         <Hero />
         <Features />
+        <Screens />
         <Widget />
         <Privacy />
         <Download />
@@ -76,7 +101,7 @@ function Hero() {
         </div>
 
         <div className="aura-rise mx-auto w-full max-w-[280px] md:max-w-[320px]" style={{ animationDelay: "0.15s" }}>
-          <PhoneMockup className="aura-float" />
+          <PhoneMockup className="aura-float" preload />
         </div>
       </div>
     </section>
@@ -101,6 +126,31 @@ function Features() {
               <h3 className="mt-3 font-serif text-2xl text-ink">{feature.title}</h3>
               <p className="mt-2.5 leading-relaxed text-ink-soft">{feature.body}</p>
             </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Screens() {
+  return (
+    <section id="screens" className="scroll-mt-24 bg-surface pb-24 md:pb-32">
+      <div className="mx-auto max-w-6xl px-6">
+        <SectionLabel>In the app</SectionLabel>
+        <h2 className="mt-4 max-w-2xl font-serif text-4xl leading-tight text-ink sm:text-5xl">
+          From forecast to front door.
+        </h2>
+
+        <div className="mt-14 grid gap-14 sm:grid-cols-3 sm:gap-8">
+          {SCREENS.map((screen) => (
+            <figure key={screen.title} className="mx-auto w-full max-w-[280px]">
+              <PhoneMockup src={screen.src} alt={screen.alt} />
+              <figcaption className="mt-6 text-center">
+                <p className="font-serif text-2xl text-ink">{screen.title}</p>
+                <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">{screen.body}</p>
+              </figcaption>
+            </figure>
           ))}
         </div>
       </div>

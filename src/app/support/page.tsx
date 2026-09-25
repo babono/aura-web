@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import ContactForm from "@/components/ContactForm";
 import LegalLayout, { Section } from "@/components/LegalLayout";
+import { SUPPORT_EMAIL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Support",
-  description: "Help with Aura — common questions and how to reach a human.",
+  description: "Help with Aura — common questions and how to contact us.",
 };
 
 const FAQS = [
@@ -37,16 +39,22 @@ export default function SupportPage() {
   return (
     <LegalLayout
       title="Support"
-      updated="16 September 2026"
-      intro="Most issues have a quick answer below. If yours is not here, email us — a person reads it."
+      updated="25 September 2026"
+      intro="Something not working, or a question about Aura? Send us a message — a person reads every one. Many issues also have a quick answer in the common questions below."
     >
-      <Section title="Get in touch">
-        <p>
-          Email <a href="mailto:babono@me.com">babono@me.com</a>.
-          Telling us your iPhone model and iOS version makes a bug far easier to
-          track down.
+      <section id="contact" className="scroll-mt-28">
+        <h2 className="font-serif text-2xl text-ink">Contact us</h2>
+        <p className="mt-3 leading-relaxed text-ink-soft">
+          Fill this in and it opens as an email in your mail app, or write to{" "}
+          <a href={`mailto:${SUPPORT_EMAIL}`} className="text-aura-primary underline underline-offset-2">
+            {SUPPORT_EMAIL}
+          </a>{" "}
+          directly.
         </p>
-      </Section>
+        <div className="mt-6 rounded-2xl border border-black/5 bg-surface-muted p-5 sm:p-6">
+          <ContactForm />
+        </div>
+      </section>
 
       <section>
         <h2 className="font-serif text-2xl text-ink">Common questions</h2>
